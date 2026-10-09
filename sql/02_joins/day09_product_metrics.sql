@@ -29,3 +29,12 @@ LEFT JOIN sales_orders AS o
 ON c.customer_id = o.customer_id
 GROUP BY c.customer_id, c.name
 ORDER BY c.customer_id;
+
+SELECT
+    order_id,
+    amount,
+    CASE
+        WHEN amount > 100 THEN 'High Value'
+        ELSE 'Standard'
+    END AS order_category
+FROM sales_orders;
