@@ -120,3 +120,47 @@ INNER JOIN journey_contacts AS ct
     ON j.case_id = ct.case_id
 WHERE j.customer_id = 2
 GROUP BY j.customer_id;
+
+
+SELECT j.customer_id, COUNT(DISTINCT j.case_id) AS total_cases, COUNT(jc.contact_id) AS total_contacts
+FROM journey_cases j
+INNER JOIN journey_contacts jc
+ON j.case_id = jc.case_id
+WHERE j.customer_id = 2
+GROUP BY j.customer_id;
+
+
+SELECT j.customer_id, COUNT(DISTINCT j.case_id) AS total_cases, COUNT(jc.contact_id) AS total_contacts
+FROM journey_cases j
+LEFT JOIN journey_contacts jc
+ON j.case_id = jc.case_id
+GROUP BY j.customer_id
+ORDER BY j.customer_id;
+
+
+SELECT
+    c.customer_id,
+    c.name,
+    j.case_id,
+    ct.contact_id
+FROM sales_customers AS c
+LEFT JOIN journey_cases AS j
+    ON c.customer_id = j.customer_id
+LEFT JOIN journey_contacts AS ct
+    ON j.case_id = ct.case_id
+ORDER BY c.customer_id, j.case_id, ct.contact_id;
+
+
+
+SELECT
+    c.customer_id,
+    c.name,
+    COUNT(DISTINCT j.case_id) AS total_cases,
+    COUNT(ct.contact_id) AS total_contacts
+FROM sales_customers AS c
+LEFT JOIN journey_cases AS j
+    ON c.customer_id = j.customer_id
+LEFT JOIN journey_contacts AS ct
+    ON j.case_id = ct.case_id
+GROUP BY c.customer_id, c.name
+ORDER BY c.customer_id;
